@@ -264,10 +264,12 @@
         submitBtn.disabled = true;
         submitBtn.innerHTML = "جاري الحفظ...";
 
-   fetch(scriptURL, { 
+fetch(scriptURL, { 
     method: 'POST',
-    body: new URLSearchParams(new FormData(form))
+    body: new URLSearchParams(new FormData(form)),
+    mode: 'no-cors'
 })
+
 
         .then(() => {
             mainContent.style.display = 'none';
