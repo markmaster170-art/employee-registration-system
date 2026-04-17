@@ -264,13 +264,11 @@
         submitBtn.disabled = true;
         submitBtn.innerHTML = "جاري الحفظ...";
 
-        fetch(scriptURL, { 
-            method: 'POST', 
-            body: new FormData(form),
-            mode: 'no-cors' // هذا هو السطر السحري الذي سيحل مشكلة الحظر
-        })
+    fetch(scriptURL, { 
+    method: 'POST', 
+    body: new FormData(form)
+})
         .then(() => {
-            // مع no-cors، سننتقل لصفحة الشكر مباشرة لأننا لا نستطيع قراءة الرد من جوجل
             mainContent.style.display = 'none';
             thankYouPage.style.display = 'block';
         })
