@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-green: #0a3d34; /* الأخضر الملكي */
+            --primary-green: #0a3d34; /* الأخضر الملكي من الشعار */
             --gold-accent: #c5a059;   /* الذهبي الرسمي */
             --bg-light: #f0f2f0;
             --text-color: #333;
@@ -24,6 +24,7 @@
             min-height: 100vh;
         }
 
+        /* حاوية النموذج */
         .form-container {
             background: #ffffff;
             max-width: 800px;
@@ -125,6 +126,7 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
+        /* صفحة الشكر (تظهر بعد الإرسال) */
         #thankYouPage {
             display: none;
             text-align: center;
@@ -150,6 +152,7 @@
             font-size: 18px;
         }
 
+        /* الاستجابة للهواتف */
         @media (max-width: 600px) {
             .form-grid { grid-template-columns: 1fr; }
             .full-width { grid-column: span 1; }
@@ -163,7 +166,7 @@
         <div class="header">
             <img src="https://syrian.zone/syid/materials/logo.ai.svg" alt="Logo" class="logo">
             <br>
-            <h2>بيانات الموظفين الجدد</h2>
+            <h2>بيانات الموظفين الجدد </h2>
         </div>
 
         <form id="employeeForm">
@@ -241,8 +244,7 @@
     </div>
 
     <div id="thankYouPage">
-        <div class="success-icon">✦</div> 
-        <div class="thank-you-title">تمت العملية بنجاح</div>
+        <div class="success-icon">✦</div> <div class="thank-you-title">تمت العملية بنجاح</div>
         <div class="thank-you-text">
             شكراً لك، تم استلام بياناتك وحفظها في قاعدة البيانات المركزية.<br>
             سيتم مراجعة الطلب من قبل القسم المختص.
@@ -253,7 +255,7 @@
 </div>
 
 <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwppomKEslXs6a3TrcXZJVoZRb3bX3Ckug9vPrRvpYZp6JPTmlcZIIdKhGyHirExFsK/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwppomKEslXs6a3TrcXZJVoZRb3bX3Ckug9vPrRvpYZp6JPTmlcZIIdKhGyHirExFsK/exec'; // سنقوم بتجهيزه في الخطوة التالية
     const form = document.getElementById('employeeForm');
     const submitBtn = document.getElementById('submitBtn');
     const mainContent = document.getElementById('mainFormContent');
@@ -264,24 +266,26 @@
         submitBtn.disabled = true;
         submitBtn.innerHTML = "جاري الحفظ...";
 
-fetch(scriptURL, { 
-    method: 'POST',
-    body: new URLSearchParams(new FormData(form)),
-    mode: 'no-cors'
-})
-
-
+// إضافة mode: 'no-cors' لضمان عبور البيانات من الدومين إلى جوجل
+        fetch(scriptURL, { 
+            method: 'POST', 
+            body: new FormData(form),
+            mode: 'no-cors' 
+        })
         .then(() => {
+            // بما أننا استخدمنا no-cors، سنعتبر أي استجابة نجاحاً ونظهر صفحة الشكر
             mainContent.style.display = 'none';
             thankYouPage.style.display = 'block';
         })
         .catch(error => {
             console.error('Error!', error.message);
-            alert('حدث خطأ أثناء الإرسال، يرجى المحاولة لاحقاً');
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = "إرسال البيانات";
+            alert('يرجى التحقق من الاتصال بالإنترنت');
         });
-    });
+                alert('حدث خطأ أثناء الإرسال، يرجى المحاولة لاحقاً');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = "إرسال البيانات";
+            });
+    
 </script>
 
 </body>
