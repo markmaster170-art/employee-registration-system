@@ -253,7 +253,7 @@
 </div>
 
 <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxDniKFUH08KcW-4qKLgchAsGfVUqWecYZnDAp_jNldyAQ0YHrWMCALL_N1qOy_4FUk/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzporHHiN-EKFfkk-mWK-ZGyhTxPBxahycNvfqgWHdU3BEG8v_C2-3DOmpZA_v5ZNZg/exec';
     const form = document.getElementById('employeeForm');
     const submitBtn = document.getElementById('submitBtn');
     const mainContent = document.getElementById('mainFormContent');
@@ -264,11 +264,10 @@
         submitBtn.disabled = true;
         submitBtn.innerHTML = "جاري الحفظ...";
 
-        fetch(scriptURL, { 
-            method: 'POST', 
-            body: new FormData(form),
-            mode: 'no-cors' 
-        })
+    fetch(scriptURL, { 
+    method: 'POST', 
+    body: new FormData(form)
+})
         .then(() => {
             mainContent.style.display = 'none';
             thankYouPage.style.display = 'block';
