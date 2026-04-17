@@ -255,7 +255,8 @@
 </div>
 
 <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwppomKEslXs6a3TrcXZJVoZRb3bX3Ckug9vPrRvpYZp6JPTmlcZIIdKhGyHirExFsK/exec'; // سنقوم بتجهيزه في الخطوة التالية
+    // ضع رابط الـ API الذي حصلت عليه من SheetDB هنا
+    const scriptURL = 'https://sheetdb.io/api/v1/5t3w3pe26ex89'; 
     const form = document.getElementById('employeeForm');
     const submitBtn = document.getElementById('submitBtn');
     const mainContent = document.getElementById('mainFormContent');
@@ -266,27 +267,30 @@
         submitBtn.disabled = true;
         submitBtn.innerHTML = "جاري الحفظ...";
 
-// إضافة mode: 'no-cors' لضمان عبور البيانات من الدومين إلى جوجل
-        fetch(scriptURL, { 
-            method: 'POST', 
-            body: new FormData(form),
-            mode: 'no-cors' 
+        // إرسال البيانات كـ JSON بدلاً من FormData لضمان التوافق التام
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        fetch(scriptURL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ data: [data] }) // تنسيق SheetDB يتطلب وضع البيانات في مصفوفة
         })
-        .then(() => {
-            // بما أننا استخدمنا no-cors، سنعتبر أي استجابة نجاحاً ونظهر صفحة الشكر
+        .then(response => response.json())
+        .then(html => {
             mainContent.style.display = 'none';
             thankYouPage.style.display = 'block';
         })
         .catch(error => {
             console.error('Error!', error.message);
-            alert('يرجى التحقق من الاتصال بالإنترنت');
+            alert('حدث خطأ أثناء الإرسال، يرجى المحاولة لاحقاً');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = "إرسال البيانات";
         });
-                alert('حدث خطأ أثناء الإرسال، يرجى المحاولة لاحقاً');
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = "إرسال البيانات";
-            });
-    
+    });
 </script>
-
+    
 </body>
 </html>
