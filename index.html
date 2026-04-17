@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام تسجيل الموظفين الجدد</title>
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #0a3d34; /* الأخضر الملكي */
+            --gold-accent: #c5a059;   /* الذهبي الرسمي */
+            --bg-light: #f0f2f0;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Almarai', sans-serif;
+            background-color: var(--bg-light);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .form-container {
+            background: #ffffff;
+            max-width: 800px;
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            border-top: 10px solid var(--gold-accent);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            width: 140px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        h2 {
+            color: var(--primary-green);
+            font-size: 24px;
+            margin: 10px 0;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: "";
+            display: block;
+            width: 60%;
+            height: 3px;
+            background: var(--gold-accent);
+            margin: 8px auto;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .full-width { grid-column: span 2; }
+
+        .form-group { margin-bottom: 20px; }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--primary-green);
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: 'Almarai', sans-serif;
+            font-size: 15px;
+            background-color: #fafafa;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--gold-accent);
+            background-color: #fff;
+            box-shadow: 0 0 8px rgba(197, 160, 89, 0.2);
+        }
+
+        button#submitBtn {
+            width: 100%;
+            background-color: var(--primary-green);
+            color: white;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        button#submitBtn:hover {
+            background-color: #0d5246;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        #thankYouPage {
+            display: none;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .success-icon {
+            font-size: 80px;
+            color: var(--gold-accent);
+            margin-bottom: 25px;
+        }
+
+        .thank-you-title {
+            color: var(--primary-green);
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .thank-you-text {
+            color: #666;
+            line-height: 1.8;
+            font-size: 18px;
+        }
+
+        @media (max-width: 600px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <div id="mainFormContent">
+        <div class="header">
+            <img src="https://syrian.zone/syid/materials/logo.ai.svg" alt="Logo" class="logo">
+            <br>
+            <h2>بيانات الموظفين الجدد</h2>
+        </div>
+
+        <form id="employeeForm">
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label>الرقم الوطني (10 أرقام)</label>
+                    <input type="text" name="national_id" pattern="\d{10}" maxlength="10" required placeholder="0000000000">
+                </div>
+
+                <div class="form-group">
+                    <label>الاسم</label>
+                    <input type="text" name="first_name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>اسم الأب</label>
+                    <input type="text" name="father_name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>النسبة (الكنية)</label>
+                    <input type="text" name="last_name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>اسم الأم</label>
+                    <input type="text" name="mother_name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>الجنس</label>
+                    <select name="gender" required>
+                        <option value="">اختر...</option>
+                        <option value="ذكر">ذكر</option>
+                        <option value="أنثى">أنثى</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>محل الولادة (المحافظة)</label>
+                    <select name="birth_place" required>
+                        <option value="">اختر المحافظة</option>
+                        <option value="دمشق">دمشق</option>
+                        <option value="ريف دمشق">ريف دمشق</option>
+                        <option value="حلب">حلب</option>
+                        <option value="حمص">حمص</option>
+                        <option value="حماة">حماة</option>
+                        <option value="اللاذقية">اللاذقية</option>
+                        <option value="طرطوس">طرطوس</option>
+                        <option value="إدلب">إدلب</option>
+                        <option value="دير الزور">دير الزور</option>
+                        <option value="الرقة">الرقة</option>
+                        <option value="الحسكة">الحسكة</option>
+                        <option value="درعا">درعا</option>
+                        <option value="السويداء">السويداء</option>
+                        <option value="القنيطرة">القنيطرة</option>
+                    </select>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>تاريخ الولادة</label>
+                    <input type="date" name="birth_date" required>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>ملاحظات إضافية</label>
+                    <textarea name="notes" rows="3" placeholder="أدخل أي ملاحظات إن وجدت..."></textarea>
+                </div>
+            </div>
+
+            <button type="submit" id="submitBtn">
+                <span>إرسال البيانات</span>
+            </button>
+        </form>
+    </div>
+
+    <div id="thankYouPage">
+        <div class="success-icon">✦</div> 
+        <div class="thank-you-title">تمت العملية بنجاح</div>
+        <div class="thank-you-text">
+            شكراً لك، تم استلام بياناتك وحفظها في قاعدة البيانات المركزية.<br>
+            سيتم مراجعة الطلب من قبل القسم المختص.
+        </div>
+        <br>
+        <button onclick="location.reload()" style="background: none; border: 1px solid var(--gold-accent); color: var(--gold-accent); padding: 10px 20px; border-radius: 5px; cursor: pointer; font-family: 'Almarai';">إدخال موظف آخر</button>
+    </div>
+</div>
+
+<script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwQZwRPuCxl2NnkB97-J7-mr-rDHcI_cWjNvuODURTr-kXFM98dUs89qjYeliXUAivT/exec';
+    const form = document.getElementById('employeeForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const mainContent = document.getElementById('mainFormContent');
+    const thankYouPage = document.getElementById('thankYouPage');
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = "جاري الحفظ...";
+
+        fetch(scriptURL, { 
+            method: 'POST', 
+            body: new FormData(form),
+            mode: 'no-cors' 
+        })
+        .then(() => {
+            mainContent.style.display = 'none';
+            thankYouPage.style.display = 'block';
+        })
+        .catch(error => {
+            console.error('Error!', error.message);
+            alert('حدث خطأ أثناء الإرسال، يرجى المحاولة لاحقاً');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = "إرسال البيانات";
+        });
+    });
+</script>
+
+</body>
+</html>
