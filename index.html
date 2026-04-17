@@ -253,7 +253,7 @@
 </div>
 
 <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwlTSxDWEC56v1SYxhSzV6n5wnA5NMqNZ3SQOUOzSCEIHaGSZOcVRtyEIzs5xy5lmww/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxIgOd0eMR_OmwYI_pxN1qMbESAjkSGgnBpHHzUYcEb3rjg0MEu5aAjyjS8rev__uXK/exec';
     const form = document.getElementById('employeeForm');
     const submitBtn = document.getElementById('submitBtn');
     const mainContent = document.getElementById('mainFormContent');
@@ -264,11 +264,13 @@
         submitBtn.disabled = true;
         submitBtn.innerHTML = "جاري الحفظ...";
 
-    fetch(scriptURL, { 
-    method: 'POST', 
-    body: new FormData(form)
-})
+        fetch(scriptURL, { 
+            method: 'POST', 
+            body: new FormData(form),
+            mode: 'no-cors' // هذا هو السطر السحري الذي سيحل مشكلة الحظر
+        })
         .then(() => {
+            // مع no-cors، سننتقل لصفحة الشكر مباشرة لأننا لا نستطيع قراءة الرد من جوجل
             mainContent.style.display = 'none';
             thankYouPage.style.display = 'block';
         })
