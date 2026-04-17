@@ -259,26 +259,27 @@
     const mainContent = document.getElementById('mainFormContent');
     const thankYouPage = document.getElementById('thankYouPage');
 
-    form.addEventListener('submit', e => {
-        e.preventDefault();
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = "جاري الحفظ...";
+form.addEventListener('submit', e => {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = "جاري الحفظ...";
 
     fetch(scriptURL, { 
-    method: 'POST', 
-    body: new FormData(form)
-})
-        .then(() => {
-            mainContent.style.display = 'none';
-            thankYouPage.style.display = 'block';
-        })
-        .catch(error => {
-            console.error('Error!', error.message);
-            alert('حدث خطأ أثناء الإرسال، يرجى المحاولة لاحقاً');
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = "إرسال البيانات";
-        });
+        method: 'POST', 
+        body: new FormData(form),
+        mode: 'no-cors'   // رجعناها
+    })
+    .then(() => {
+        // نعتبره نجاح مباشرة
+        mainContent.style.display = 'none';
+        thankYouPage.style.display = 'block';
+    })
+    .catch(() => {
+        alert('حدث خطأ أثناء الإرسال');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = "إرسال البيانات";
     });
+});
 </script>
 
 </body>
