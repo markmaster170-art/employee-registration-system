@@ -253,33 +253,32 @@
 </div>
 
 <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbz67XS8g24zRSzP-FD2mbQgRN4Se3V5C_hZz_iLPbWWvunoM0vxJUhNqnhyB3E9Of8u/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwlTSxDWEC56v1SYxhSzV6n5wnA5NMqNZ3SQOUOzSCEIHaGSZOcVRtyEIzs5xy5lmww/exec';
     const form = document.getElementById('employeeForm');
     const submitBtn = document.getElementById('submitBtn');
     const mainContent = document.getElementById('mainFormContent');
     const thankYouPage = document.getElementById('thankYouPage');
 
-form.addEventListener('submit', e => {
-    e.preventDefault();
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = "جاري الحفظ...";
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = "جاري الحفظ...";
 
     fetch(scriptURL, { 
-        method: 'POST', 
-        body: new FormData(form),
-        mode: 'no-cors'   // رجعناها
-    })
-    .then(() => {
-        // نعتبره نجاح مباشرة
-        mainContent.style.display = 'none';
-        thankYouPage.style.display = 'block';
-    })
-    .catch(() => {
-        alert('حدث خطأ أثناء الإرسال');
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = "إرسال البيانات";
+    method: 'POST', 
+    body: new FormData(form)
+})
+        .then(() => {
+            mainContent.style.display = 'none';
+            thankYouPage.style.display = 'block';
+        })
+        .catch(error => {
+            console.error('Error!', error.message);
+            alert('حدث خطأ أثناء الإرسال، يرجى المحاولة لاحقاً');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = "إرسال البيانات";
+        });
     });
-});
 </script>
 
 </body>
