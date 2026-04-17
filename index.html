@@ -253,7 +253,7 @@
 </div>
 
 <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzJru1my1wDgaxrv9ijGD_tti6AcnLka7J0yoT8rDWLHnvUlrC1EmF1HT_-2MOcsvck/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzq_Y_jY85HoFcFyo7ucLm1pWnGKm6MbyEwI9yvwtAwohU3KXeyAOPlJjDbLSkf-IyF/exec';
     const form = document.getElementById('employeeForm');
     const submitBtn = document.getElementById('submitBtn');
     const mainContent = document.getElementById('mainFormContent');
@@ -264,14 +264,12 @@
         submitBtn.disabled = true;
         submitBtn.innerHTML = "جاري الحفظ...";
 
-        // استخدام FormData وتغيير الإعدادات لتعمل مع Google Apps Script
-        fetch(scriptURL, { 
-            method: 'POST', 
-            body: new FormData(form),
-            mode: 'no-cors' // هذا السطر هو مفتاح الحل
-        })
+   fetch(scriptURL, { 
+    method: 'POST',
+    body: new URLSearchParams(new FormData(form))
+})
+
         .then(() => {
-            // بما أننا نستخدم no-cors، جوجل لن يعيد رد نقرأه، لذا نفترض النجاح
             mainContent.style.display = 'none';
             thankYouPage.style.display = 'block';
         })
